@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Men's Category</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="landing.css">
+</head>
+
+<body>
+    <!-- Header Section -->
+    <header class="bg-dark">
+        <nav class="container navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="/">Your Store Name</a>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/landingPage.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!-- Add other navigation links as needed -->
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mt-5">
+        <h1 class="mb-4">Women's Category</h1>
+        <!-- Products will be inserted here by the JavaScript code -->
+        <div id="category-products" class="row"></div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-white mt-5 py-3">
+        <div class="container text-center">
+            <p>&copy; 2023 Your Store Name. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- JavaScript code for fetching and displaying products -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('https://fakestoreapi.com/products/category/women%27s%20clothing')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(products => {
+                    displayProducts(products);
+                })
+                .catch(error => {
+                    console.log('There was a problem with the fetch operation:', error.message);
+                    document.getElementById('category-products').innerText = 'Failed to load products. Please try again later.';
+                });
+        });
+
+        function displayProducts(products) {
+    const productsContainer = document.getElementById('category-products');
+
+    products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'col-md-4 mb-4';
+
+        productDiv.innerHTML = `
+            <div class="card h-100">
+                <a href="product.html?id=${product.id}">
+                    <img src="${product.image}" alt="${product.title}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">${product.title}</h5>
+                        <p><strong>Category:</strong> ${product.category}</p>
+                        <p><strong>Price:</strong> $${product.price}</p>
+                    </div>
+                </a>
+                <div class="card-footer">
+                    <button class="btn btn-primary btn-block btn-cart">Add to Cart</button>
+                </div>
+            </div>
+        `;
+
+        // Add click event to the button
+        productDiv.querySelector('.btn-cart').addEventListener('click', function() {
+            addToCart(product);
+            alert(`${product.title} has been added to your cart!`); // optional
+        });
+
+        productsContainer.appendChild(productDiv);
+    });
+}
+
+        
+        function addToCart(product) {
+    // Retrieve the cart from local storage
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Check if the product is already in the cart
+    const existingProduct = cart.find(item => item.id === product.id);
+
+    if (existingProduct) {
+        existingProduct.quantity += 1; // Increment quantity if the product is already in the cart
+    } else {
+        product.quantity = 1; // Set quantity to 1 for a new product
+        cart.push(product);
+    }
+
+    // Save the updated cart back to local storage
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+    </script>
+</body>
+
+</html>

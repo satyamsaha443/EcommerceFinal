@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"name": "ecomm5-main",
+			"path": "."
+		},
+		{
+			"name": "assets",
+			"path": "../EcommAssignment5/assets"
+		}
+	],
+	"settings": {
+		"liveServer.settings.port": 5502,
+		"liveServer.settings.multiRootWorkspaceName": "ecomm5-main"
+	}
+}

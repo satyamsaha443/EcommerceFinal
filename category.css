@@ -1,0 +1,80 @@
+.category-previews,
+.category-previews1,
+.category-previews2,
+.category-previews3 {
+  border-radius: var(--br-xs);
+  width: 15.19rem;
+  height: 22.69rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--padding-5xl);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+  position: relative; /* Add relative positioning to allow for absolute positioned elements inside */
+  cursor: pointer; /* Add a pointer cursor to indicate interactivity */
+  transition: transform 0.3s ease-out; /* Add a transition effect on hover */
+}
+
+.category-previews:hover,
+.category-previews1:hover,
+.category-previews2:hover,
+.category-previews3:hover {
+  transform: translateY(-10px); /* Add a lifting effect on hover */
+}
+
+.category-previews {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  background-image: url(./assets/mens.jpeg);
+}
+.category-previews1 {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  background-image: url(./assets/womens.jpeg);
+}
+.category-previews2 {
+  background-image: url(./assets/electronics.jpeg);
+}
+.category-previews3 {
+  border-radius: var(--br-xs);
+  width: 15.19rem;
+  height: 22.69rem;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--padding-5xl);
+  background-image: url(./assets/jewelwey.jpeg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+}
+
+.row-14 {
+  width: 72.94rem;
+  overflow: hidden;
+  flex-direction: row;
+  justify-content: center;
+  padding: var(--padding-base) 0;
+  gap: var(--gap-11xl);
+  font-size: var(--body-size);
+  color: var(--white);
+  position: relative; /* Add relative positioning to allow for absolute positioned elements inside */
+}
+
+.shop-by-category {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the element within its parent */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap-21xl);
+  font-size: var(--h3-size);
+  color: var(--dark);
+  text-align: center;
+  z-index: 1; /* Bring the element to the front */
+}
