@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => {
             console.error("Error fetching products:", error);
         });
+
+      
 });
 
 // ... (rest of the scripts.js file)
@@ -26,7 +28,9 @@ function displayProducts(products) {
                         <h5 class="card-title">${product.title}</h5>    
                         <p><strong>Category:</strong> ${product.category}</p>
                         <p><strong>Price:</strong> ₹${product.price}</p>
-                        <p><strong>Rating:</strong> ₹${product.rating.rate}</p>
+                        
+<p><strong>Rating:</strong> ${product.rating.rate} (${product.rating.count} reviews)</p>
+
 
                         <button class="btn-cart" onclick="addToCart(event, ${product.id}, '${product.title}', ${product.price}, '${product.category}', '${product.description}', '${product.image}', '${product.rating}')">
                         Add to Cart
@@ -105,6 +109,13 @@ document.addEventListener("DOMContentLoaded", function() {
         .catch(error => {
             console.error("Error fetching products:", error);
         });
+        const sortOptions = document.querySelectorAll('.dropdown-item');
+        sortOptions.forEach(option => {
+            option.addEventListener('click', function(event) {
+                event.preventDefault();
+                sortAndDisplayProducts(event.target.getAttribute('data-sort'));
+            });
+        });
 });
 
 
@@ -114,4 +125,32 @@ function filterProductsByPrice(price) {
   const filteredProducts = originalProducts.filter(product => product.price <= price);
   localStorage.setItem('filteredProducts', JSON.stringify(filteredProducts));
   displayProducts(filteredProducts);
+}
+
+function sortAndDisplayProducts(sortType) {
+    const products = JSON.parse(localStorage.getItem('products'));
+    let sortedProducts;
+
+    switch (sortType) {
+        case "priceHighToLow":
+            sortedProducts = [...products].sort((a, b) => b.price - a.price);
+            break;
+        case "priceLowToHigh":
+            sortedProducts = [...products].sort((a, b) => a.price - b.price);
+            break;
+        case "titleAZ":
+            sortedProducts = [...products].sort((a, b) => a.title.localeCompare(b.title));
+            break;
+        case "ratingHighToLow":
+            sortedProducts = [...products].sort((a, b) => b.rating.rate - a.rating.rate);
+            break;
+        case "ratingLowToHigh":
+            sortedProducts = [...products].sort((a, b) => a.rating.rate - b.rating.rate);
+            break;
+        default:
+            sortedProducts = products;
+            break;
+    }
+
+    displayProducts(sortedProducts);
 }

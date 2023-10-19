@@ -4,9 +4,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function displayCartItems() {
     const cartContainer = document.getElementById('cart-items');
+    const totalAmountElem = document.getElementById('total-amount');
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     cartContainer.innerHTML = "";
+    
+    let totalAmount = 0;  // Added to track total amount
 
     cart.forEach((item, index) => {
         const tr = document.createElement('tr');
@@ -22,11 +25,15 @@ function displayCartItems() {
                 <button onclick="subQuantity(${index})" class="btn-cart">Remove</button>
                 <button onclick="removeFromCart(${index})" class="btn-cart">Delete</button>
             </td>
-
         `;
 
         cartContainer.appendChild(tr);
+        
+        totalAmount += item.price * item.quantity;  // Update the total amount for each item
     });
+    
+    // Round off the total amount to the nearest whole number and update the total amount section
+    totalAmountElem.innerText = "₹" + Math.round(totalAmount);
 }
 
 
